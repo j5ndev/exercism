@@ -9,8 +9,8 @@ pub const Queen = struct {
     pub fn init(row: i8, col: i8) QueenError!Queen {
         if (row < 0 or row > 7 or col < 0 or col > 7) return QueenError.InitializationFailure;
         return Queen {
-            .row= row,
-            .col=col
+            .row = row,
+            .col = col,
         };
     }
 
