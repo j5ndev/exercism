@@ -1,17 +1,24 @@
-pub const QueenError = error{
+pub const QueenError = error {
     InitializationFailure,
 };
 
 pub const Queen = struct {
+    row: i8,
+    col: i8,
+
     pub fn init(row: i8, col: i8) QueenError!Queen {
-        _ = row;
-        _ = col;
-        @compileError("please implement the init method");
+        if (row < 0 or row > 7 or col < 0 or col > 7) return QueenError.InitializationFailure;
+        return Queen {
+            .row= row,
+            .col=col
+        };
     }
 
     pub fn canAttack(self: Queen, other: Queen) QueenError!bool {
-        _ = self;
-        _ = other;
-        @compileError("please implement the canAttack method");
+        const sameRow: bool = self.row == other.row;
+        const sameCol: bool = self.col == other.col;
+        if (sameRow and sameCol) return QueenError.InitializationFailure;
+        if (sameRow or sameCol) return true;
+        return @abs(self.row - other.row) == @abs(self.col - other.col);
     }
 };
