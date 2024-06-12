@@ -7,14 +7,14 @@ pub const Classification = enum {
 /// Asserts that `n` is nonzero.
 pub fn classify(n: u64) Classification {
     var sum: u64 = 0;
-    for (1..n) |i| {
+    for (1..(n/2)+1) |i| {
         if (n % i == 0) sum += i;
     }
     if (n < sum) {
-        return Classification.abundant;
+        return .abundant;
     } else  if (n == sum) {
-        return Classification.perfect;
+        return .perfect;
     } else {
-        return Classification.deficient;
+        return .deficient;
     }
 }
