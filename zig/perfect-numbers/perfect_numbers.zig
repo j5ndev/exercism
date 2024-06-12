@@ -1,3 +1,5 @@
+const order = @import("std").math.order;
+
 pub const Classification = enum {
     deficient,
     perfect,
@@ -10,11 +12,9 @@ pub fn classify(n: u64) Classification {
     for (1..(n/2)+1) |i| {
         if (n % i == 0) sum += i;
     }
-    if (n < sum) {
-        return .abundant;
-    } else  if (n == sum) {
-        return .perfect;
-    } else {
-        return .deficient;
-    }
+    return switch(order(sum, n)){
+        .eq => .perfect,
+        .lt => .deficient,
+        .gt => .abundant,
+    };
 }
