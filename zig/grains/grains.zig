@@ -10,5 +10,5 @@ pub fn square(index: usize) ChessboardError!u64 {
 }
 
 pub fn total() u64 {
-     return ~@as(u64, 0);
+     return comptime ~@as(u64, 0);
 }
