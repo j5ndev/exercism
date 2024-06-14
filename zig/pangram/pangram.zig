@@ -1,11 +1,11 @@
-const ascii = @import("std").ascii;
-
 pub fn isPangram(str: []const u8) bool {
-    var letters = [_]u1{0} ** 26;
+    var letters: u26 = 0;
     for (str) |l| {
-        if (!ascii.isAlphabetic(l)) continue;
-        letters[ascii.toUpper(l) - 'A'] = 1;
+        switch (l) {
+            'a'...'z' => letters |= @as(u26, 1) << @intCast(l - 'a'),
+            'A'...'Z' => letters |= @as(u26, 1) << @intCast(l - 'A'),
+            else => continue,
+        }
     }
-    for (letters) |v| if (v == 0) return false;
-    return true;
+    return letters == comptime ~@as(u26, 0);
 }
