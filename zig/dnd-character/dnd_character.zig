@@ -5,7 +5,7 @@ pub fn modifier(score: i8) i8 {
 }
 
 pub fn ability() i8 {
-    return std.crypto.random.intRangeAtMost(i8, 3,18);
+    return std.crypto.random.intRangeAtMost(i8, 3, 18);
 }
 
 pub const Character = struct {
@@ -29,5 +29,4 @@ pub const Character = struct {
             .hitpoints = 10 + modifier(constitution),
        };
     }
-
 };
