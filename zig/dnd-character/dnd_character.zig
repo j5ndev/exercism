@@ -5,7 +5,14 @@ pub fn modifier(score: i8) i8 {
 }
 
 pub fn ability() i8 {
-    return std.crypto.random.intRangeAtMost(i8, 3, 18);
+    var lowest:i8 = 6;
+    var sum:i8 = 0;
+    for (0..4) |_| {
+        const roll = std.crypto.random.intRangeAtMost(i8, 1, 6);
+        if (roll < lowest) lowest = roll;
+        sum += roll;
+    }
+    return sum - lowest;
 }
 
 pub const Character = struct {
