@@ -7,11 +7,9 @@ pub fn isBalanced(allocator: mem.Allocator, s: []const u8) !bool {
 
     for (s) |c| {
         try switch(c) {
-            '(' => |v| stack.append(v),
+            '(','{','[' => |v| stack.append(v),
             ')' => if ('(' != stack.popOrNull() orelse return false) return false,
-            '{' => |v| stack.append(v),
             '}' => if ('{' != stack.popOrNull() orelse return false) return false,
-            '[' => |v| stack.append(v),
             ']' => if ('[' != stack.popOrNull() orelse return false) return false,
             else => continue,
         };
