@@ -8,19 +8,11 @@ pub fn isBalanced(allocator: mem.Allocator, s: []const u8) !bool {
     for (s) |c| {
         try switch(c) {
             '(', '{', '[' => |v| stack.append(v),
-            ')', '}', ']' => |v| if (match(v) != stack.popOrNull() orelse return false) return false,
+            ')' => if ('(' != stack.popOrNull() orelse return false) return false,
+            '}' => if ('{' != stack.popOrNull() orelse return false) return false,
+            ']' => if ('[' != stack.popOrNull() orelse return false) return false,
             else => continue,
         };
     }
     return stack.items.len == 0;
-}
-
-fn match(c: u8) u8 {
-    std.debug.assert(c == ')' or c == '}' or c == ']');
-    return switch (c) {
-        ')' => '(',
-        '}' => '{',
-        ']' => '[',
-        else => unreachable,
-    };
 }
