@@ -1,7 +1,8 @@
-const fixedBufferStream = @import("std").io.fixedBufferStream;
+
+const std = @import("std");
 
 pub fn convert(buffer: []u8, n: u32) []const u8 {
-    var stream = fixedBufferStream(buffer);
+    var stream = std.io.fixedBufferStream(buffer);
     var writer = stream.writer();
     if (n % 3 == 0) writer.writeAll("Pling") catch unreachable;
     if (n % 5 == 0) writer.writeAll("Plang") catch unreachable;
