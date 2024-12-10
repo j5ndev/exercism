@@ -1,10 +1,8 @@
 """Functions to prevent a nuclear meltdown."""
 
-from typing import Union
-
 def is_criticality_balanced(
         temperature: int,
-        neutrons_emitted: Union[int, float]
+        neutrons_emitted: int|float
     ) -> bool:
     """Verify criticality is balanced.
 
@@ -24,9 +22,9 @@ def is_criticality_balanced(
 
 
 def reactor_efficiency(
-        voltage: Union[int, float],
-        current: Union[int, float],
-        theoretical_max_power: Union[int, float]
+        voltage: int|float,
+        current: int|float,
+        theoretical_max_power: int|float
     ) -> str:
     """Assess reactor efficiency zone.
 
@@ -62,9 +60,9 @@ def reactor_efficiency(
     return result
 
 def fail_safe(
-        temperature: Union[int, float],
-        neutrons_produced_per_second: Union[int, float],
-        threshold: Union[int, float]
+        temperature: int|float,
+        neutrons_produced_per_second: int|float,
+        threshold: int|float
     ) -> str:
     """Assess and return status code for the reactor.
 
