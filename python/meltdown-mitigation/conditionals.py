@@ -1,7 +1,11 @@
 """Functions to prevent a nuclear meltdown."""
 
+from typing import Union
 
-def is_criticality_balanced(temperature, neutrons_emitted):
+def is_criticality_balanced(
+        temperature: int,
+        neutrons_emitted: Union[int, float]
+    ) -> bool:
     """Verify criticality is balanced.
 
     :param temperature: int or float - temperature value in kelvin.
@@ -14,10 +18,16 @@ def is_criticality_balanced(temperature, neutrons_emitted):
     - The product of temperature and neutrons emitted per second is less than 500000.
     """
 
-    pass
+    return temperature < 800 \
+            and neutrons_emitted > 500 \
+            and temperature * neutrons_emitted < 500000
 
 
-def reactor_efficiency(voltage, current, theoretical_max_power):
+def reactor_efficiency(
+        voltage: Union[int, float],
+        current: Union[int, float],
+        theoretical_max_power: Union[int, float]
+    ) -> str:
     """Assess reactor efficiency zone.
 
     :param voltage: int or float - voltage value.
@@ -37,10 +47,25 @@ def reactor_efficiency(voltage, current, theoretical_max_power):
     where generated power = voltage * current
     """
 
-    pass
+    power = current * voltage
+    efficiency = power / theoretical_max_power
 
+    if efficiency >= 0.8:
+        result = 'green'
+    elif efficiency < 0.8 and efficiency >= 0.6:
+        result = 'orange'
+    elif efficiency < 0.6 and efficiency >= 0.3:
+        result = 'red'
+    else:
+        result = 'black'
 
-def fail_safe(temperature, neutrons_produced_per_second, threshold):
+    return result
+
+def fail_safe(
+        temperature: Union[int, float],
+        neutrons_produced_per_second: Union[int, float],
+        threshold: Union[int, float]
+    ) -> str:
     """Assess and return status code for the reactor.
 
     :param temperature: int or float - value of the temperature in kelvin.
@@ -53,4 +78,13 @@ def fail_safe(temperature, neutrons_produced_per_second, threshold):
     3. 'DANGER' -> `temperature * neutrons per second` is not in the above-stated ranges
     """
 
-    pass
+    value = temperature * neutrons_produced_per_second
+
+    if value < 0.9 * threshold:
+        result = 'LOW'
+    elif value >= 0.9 * threshold and value <= 1.1 * threshold:
+        result = 'NORMAL'
+    else:
+        result = 'DANGER'
+
+    return result
