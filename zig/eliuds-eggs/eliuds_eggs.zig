@@ -1,9 +1,6 @@
-const std = @import("std");
-
 pub fn eggCount(number: usize) usize {
     var result: usize = 0;
-    for (0..@bitSizeOf(usize)) |i| {
-        result += (number & std.math.pow(usize, 2, i)) >> @truncate(i);
-    }
+    var n: usize = number;
+    while (n > 0) : (n >>= 1) result += n & 1;
     return result;
 }
