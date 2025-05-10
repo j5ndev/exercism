@@ -1,5 +1,5 @@
 const fixedBufferStream = @import("std").io.fixedBufferStream;
-
+const toLower = @import("std").ascii.toLower;
 pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
     var take = take_down;
     var start = start_bottles;
@@ -11,16 +11,16 @@ pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
     }
 
     const numbers = [_][] const u8 {
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine",
-        "ten",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+        "Nine",
+        "Ten",
     };
 
     var fbs = fixedBufferStream(buffer);
@@ -35,18 +35,18 @@ pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
             \\{s} green bottles hanging on the wall
             \\{s} green bottles hanging on the wall
             \\And if one green bottle should accidentally fall,
-            \\There'll be {s} green bottle{s} hanging on the wall.
+            \\There'll be {c}{s} green bottle{s} hanging on the wall.
         ;
         const number = numbers[i];
-        var one_less = "no";
+        var one_less: []const u8 = "no";
         if (i > 0) {
             one_less = numbers[i-1];
         }
-        var part = "";
+        var part: []const u8 = "";
         if (i == 1) {
             part = "s";
         }
-        //TODO: handle conditional capitalization
-       fbsw.print(format, .{number, number, one_less, part}) catch unreachable;
+       fbsw.print(format, .{number, number, toLower(one_less[0]), one_less[1..], part}) catch unreachable;
     }
+    return buffer[0 .. fbs.pos];
 }
