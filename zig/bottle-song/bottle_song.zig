@@ -28,7 +28,7 @@ pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
     const stop: u32 = pos - take;
     while (pos > stop) : (pos -= 1) {
 
-        // Write a newline if this is not the first verse
+        // Write a newlines if this is not the first verse
         if (fbs.pos > 0) fbsw.writeAll("\n\n") catch unreachable;
 
         // Write the verse
@@ -39,14 +39,14 @@ pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
             \\There'll be {c}{s} green bottle{s} hanging on the wall.
         ;
         const number = numbers[pos];
+        var number_part: []const u8 = "s";
+        if (pos == 1) {
+            number_part = "";
+        }
         const one_less = numbers[pos - 1];
         var one_less_part: []const u8 = "s";
         if (pos == 2) {
             one_less_part = "";
-        }
-        var number_part: []const u8 = "s";
-        if (pos == 1) {
-            number_part = "";
         }
         fbsw.print(format, .{ number, number_part, number, number_part, toLower(one_less[0]), one_less[1..], one_less_part }) catch unreachable;
     }
