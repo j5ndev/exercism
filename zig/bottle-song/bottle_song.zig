@@ -28,7 +28,7 @@ pub fn recite(buffer: []u8, start_bottles: u32, take_down: u32) []const u8 {
     const stop: u32 = pos - take;
     while (pos > stop) : (pos -= 1) {
 
-        // Write a newlines if this is not the first verse
+        // Write newlines if this is not the first verse
         if (fbs.pos > 0) fbsw.writeAll("\n\n") catch unreachable;
 
         // Write the verse
